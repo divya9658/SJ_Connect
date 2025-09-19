@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommunityHub - Building Connections Together</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="community.css">
+</head>
+<body>
+    <header>
+        <div class="header1">
+            <nav class="navbar">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                </div>
+    
+                <div class="nav-content">
+                    <div class="hamburger">
+                        &#9776
+                    </div>
+    
+                    <ul class="nav-menu">
+                        <li><a href="./Project.html" class="nav-link">Home</a></li>
+                        <li><a href="./About.html" class="nav-link">About</a></li>
+                        <li><a href="./Announcements.html" class="nav-link">Announcements</a></li>
+                        <li><a href="./Anonymous.html" class="nav-link">Anonymous Box</a></li>
+                        <li><a href="./Experience.html" class="nav-link">Experience Wall</a></li>
+                        <li><a href="./Community.html" class="nav-link">Community</a></li>
+                        <li><a href="./Contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+    
+                    <div class="profile-dropdown">
+                        <button class="profile-btn">
+                            <a href="profile.html">My Profile</a>
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item">
+                                <a href="./index.html"> 🚪 Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="mobile-menu">
+            <span class="close-menu" onclick="closeMobileMenu()">&times;</span>
+            <ul class="nav-menu">
+                <li><a href="./Project.html" class="nav-link">Home</a></li>
+                <li><a href="./About.html" class="nav-link">About</a></li>
+                <li><a href="./Announcements.html" class="nav-link">Announcements</a></li>
+                <li><a href="./Anonymous.html" class="nav-link">Anonymous Box</a></li>
+                <li><a href="./Experience.html" class="nav-link">Experience Wall</a></li>
+                <li><a href="./Community.html" class="nav-link">Community</a></li>
+                <li><a href="./Contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    
+        <div class="overlay"></div>
+    </header>
+
+    <!-- Chat Notification -->
+    <div class="chat-notification" id="chatNotification">
+        <div class="notification-content">
+            <div class="notification-avatar">
+                <i class="fas fa-users"></i>
+            </div>
+            <div>
+                <strong id="notificationTitle">Welcome to the Community!</strong>
+                <div id="notificationText">You've successfully joined. Start chatting now!</div>
+            </div>
+        </div>
+        <button class="close-notification" onclick="closeNotification()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Chat Sidebar -->
+    <div class="chat-sidebar" id="chatSidebar">
+        <div class="chat-header">
+            <div class="chat-info">
+                <div class="chat-avatar" id="chatAvatar">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div>
+                    <div id="chatCommunityName">Community Chat</div>
+                    <div style="font-size: 0.8rem; opacity: 0.8;" id="chatMemberCount">Loading...</div>
+                </div>
+            </div>
+            <button class="close-chat" onclick="closeChatSidebar()" >
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be populated here -->
+        </div>
+        
+        <div class="chat-input">
+            <div class="input-group">
+                <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Build Amazing Communities Together</h1>
+                <p class="hero-subtitle">Connect, collaborate, and grow with like-minded people in communities that matter to you. Create lasting relationships and share meaningful experiences.</p>
+                <div class="hero-buttons">
+                    <a href="./Anonymous.html" class="btn btn-primary ripple-effect">
+                        <i class="fas fa-rocket"></i>
+                        Private message
+                    </a>
+                    <a href="#communities" class="btn btn-secondary ripple-effect">
+                        <i class="fas fa-play"></i>
+                        Explore Communities
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="community-grid">
+                    <div class="member-card">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">Alex</div>
+                        <div class="member-role">Designer</div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">Sarah</div>
+                        <div class="member-role">Developer</div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">Mike</div>
+                        <div class="member-role">Manager</div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">Lisa</div>
+                        <div class="member-role">Coder</div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">John</div>
+                        <div class="member-role">Hacker</div>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">Emma</div>
+                        <div class="member-role">Teacher</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Powerful Features for Community Building</h2>
+            <p class="section-subtitle">Everything you need to create, manage, and grow thriving communities</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="feature-title">Real-Time Chat</h3>
+                    <p class="feature-description">Instant messaging with emoji reactions, file sharing, and threaded conversations to keep discussions organized and engaging.</p>
+                    <ul class="feature-list">
+                        <li>Lightning-fast message delivery</li>
+                        <li>Rich media support (images, videos, files)</li>
+                        <li>Thread replies and mentions</li>
+                        <li>Emoji reactions and custom stickers</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Moderation</h3>
+                    <p class="feature-description">Comprehensive moderation tools to maintain healthy communities with automated spam detection and custom rules.</p>
+                    <ul class="feature-list">
+                        <li>AI-powered spam detection</li>
+                        <li>Custom moderation rules</li>
+                        <li>Role-based permissions</li>
+                        <li>Content filtering and warnings</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Analytics Dashboard</h3>
+                    <p class="feature-description">Deep insights into community engagement, member activity, and growth patterns with beautiful visual reports.</p>
+                    <ul class="feature-list">
+                        <li>Member engagement metrics</li>
+                        <li>Content performance tracking</li>
+                        <li>Growth trend analysis</li>
+                        <li>Exportable reports</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Mobile-First Design</h3>
+                    <p class="feature-description">Seamless experience across all devices with native mobile apps and responsive web design for on-the-go community management.</p>
+                    <ul class="feature-list">
+                        <li>Native iOS and Android apps</li>
+                        <li>Progressive Web App (PWA)</li>
+                        <li>Offline message sync</li>
+                        <li>Push notifications</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Event Management</h3>
+                    <p class="feature-description">Plan and organize community events with RSVP tracking, calendar integration, and automated reminders.</p>
+                    <ul class="feature-list">
+                        <li>Interactive event calendar</li>
+                        <li>RSVP and attendance tracking</li>
+                        <li>Automated email reminders</li>
+                        <li>Virtual meeting integration</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Privacy & Security</h3>
+                    <p class="feature-description">Enterprise-grade security with end-to-end encryption, private channels, and granular privacy controls.</p>
+                    <ul class="feature-list">
+                        <li>End-to-end message encryption</li>
+                        <li>Private community channels</li>
+                        <li>Two-factor authentication</li>
+                        <li>GDPR compliance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Showcase -->
+    <section class="showcase" id="communities">
+        <div class="container">
+            <h2 class="section-title">Popular Communities</h2>
+            <p class="section-subtitle">Discover amazing communities and find your tribe</p>
+            
+            <div class="showcase-grid">
+                <div class="community-card">
+                    <div class="community-header">
+                        <i class="fas fa-code community-icon"></i>
+                    </div>
+                    <div class="community-content">
+                        <h3 class="community-title">Developers United</h3>
+                        <p class="community-members">12,450 members</p>
+                        <p class="community-description">A vibrant community of developers sharing knowledge, collaborating on projects, and helping each other grow.</p>
+                        <div class="community-tags">
+                            <span class="tag">Programming</span>
+                            <span class="tag">Open Source</span>
+                            <span class="tag">Learning</span>
+                        </div>
+                        <button class="btn-join ripple-effect" onclick="joinCommunity('Developers United', 'fas fa-code', '12,450 members')">
+                            <span><i class="fas fa-users"></i> Join Community</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="community-card">
+                    <div class="community-header">
+                        <i class="fas fa-palette community-icon"></i>
+                    </div>
+                    <div class="community-content">
+                        <h3 class="community-title">Creative Minds</h3>
+                        <p class="community-members">8,230 members</p>
+                        <p class="community-description">Artists, designers, and creative professionals sharing inspiration, feedback, and collaboration opportunities.</p>
+                        <div class="community-tags">
+                            <span class="tag">Design</span>
+                            <span class="tag">Art</span>
+                            <span class="tag">Creative</span>
+                        </div>
+                        <button class="btn-join ripple-effect" onclick="joinCommunity('Creative Minds', 'fas fa-palette', '8,230 members')">
+                            <span><i class="fas fa-users"></i> Join Community</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="community-card">
+                    <div class="community-header">
+                        <i class="fas fa-rocket community-icon"></i>
+                    </div>
+                    <div class="community-content">
+                        <h3 class="community-title">Startup Founders</h3>
+                        <p class="community-members">5,670 members</p>
+                        <p class="community-description">Entrepreneurs and startup founders sharing experiences, seeking advice, and building the future together.</p>
+                        <div class="community-tags">
+                            <span class="tag">Startup</span>
+                            <span class="tag">Business</span>
+                            <span class="tag">Networking</span>
+                        </div>
+                        <button class="btn-join ripple-effect" onclick="joinCommunity('Startup Founders', 'fas fa-rocket', '5,670 members')">
+                            <span><i class="fas fa-users"></i> Join Community</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="community-card">
+                    <div class="community-header">
+                        <i class="fas fa-dumbbell community-icon"></i>
+                    </div>
+                    <div class="community-content">
+                        <h3 class="community-title">Code Crackers</h3>
+                        <p class="community-members">15,890 members</p>
+                        <p class="community-description">Fitness enthusiasts supporting each other's health journeys with tips, motivation, and accountability.</p>
+                        <div class="community-tags">
+                            <span class="tag">Blood coded</span>
+                            <span class="tag">Frontend</span>
+                            <span class="tag">Backend</span>
+                        </div>
+                        <button class="btn-join ripple-effect" onclick="joinCommunity('Code Crackers', 'fas fa-dumbbell', '15,890 members')">
+                            <span><i class="fas fa-users"></i> Join Community</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="community-card">
+                    <div class="community-header">
+                        <i class="fas fa-book community-icon"></i>
+                    </div>
+                    <div class="community-content">
+                        <h3 class="community-title">Book Lovers</h3>
+                        <p class="community-members">9,340 members</p>
+                        <p class="community-description">Passionate readers discussing their favorite books, sharing recommendations, and organizing reading challenges.</p>
+                        <div class="community-tags">
+                            <span class="tag">Reading</span>
+                            <span class="tag">Literature</span>
+                            <span class="tag">Discussion</span>
+                        </div>
+                        <button class="btn-join ripple-effect" onclick="joinCommunity('Book Lovers', 'fas fa-book', '9,340 members')">
+                            <span><i class="fas fa-users"></i> Join Community</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="community-card">
+                    <div class="community-header">
+                        <i class="fas fa-gamepad community-icon"></i>
+                    </div>
+                    <div class="community-content">
+                        <h3 class="community-title">FSD 🔥🔥</h3>
+                        <p class="community-members">22,150 members</p>
+                        <p class="community-description">Gamers of all types coming together to discuss games, organize tournaments, and build lasting friendships.</p>
+                        <div class="community-tags">
+                            <span class="tag">web Design</span>
+                            <span class="tag">development</span>
+                            <span class="tag">Thoughts</span>
+                        </div>
+                        <button class="btn-join ripple-effect" onclick="joinCommunity('FSD 🔥🔥', 'fas fa-gamepad', '22,150 members')">
+                            <span><i class="fas fa-users"></i> Join Community</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="community-card">
+                    <div class="community-header">
+                        <i class="fas fa-comments community-icon"></i>
+                    </div>
+                    <div class="community-content">
+                        <h3 class="community-title">Acadmics</h3>
+                        <p class="community-members">7,820 members</p>
+                        <p class="community-description">Sharing their notes and passing pdfs and other important documents related to sem preparations and share point</p>
+                        <div class="community-tags">
+                            <span class="tag">guides</span>
+                            <span class="tag">share points</span>
+                            <span class="tag">pdfs</span>
+                        </div>
+                        <button class="btn-join ripple-effect" onclick="joinCommunity('Acadmics', 'fas fa-camera', '7,820 members')">
+                            <span><i class="fas fa-users"></i> Join Community</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="community-card">
+                    <div class="community-header">
+                        <i class="fas fa-leaf community-icon"></i>
+                    </div>
+                    <div class="community-content">
+                        <h3 class="community-title">Thoughts club</h3>
+                        <p class="community-members">6,540 members</p>
+                        <p class="community-description">Share your ideas and thoughts for better preparations and development of  great thigs in daily Lives.</p>
+                        <div class="community-tags">
+                            <span class="tag">Thpughts</span>
+                            <span class="tag">Solving priblems</span>
+                            <span class="tag">different ideas</span>
+                        </div>
+                        <button class="btn-join ripple-effect" onclick="joinCommunity('Eco Warriors', 'fas fa-leaf', '6,540 members')">
+                            <span><i class="fas fa-users"></i> Join Community</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="community-card">
+                    <div class="community-header">
+                        <i class="fas fa-music community-icon"></i>
+                    </div>
+                    <div class="community-content">
+                        <h3 class="community-title">Hackers</h3>
+                        <p class="community-members">11,230 members</p>
+                        <p class="community-description">Hacking is the tracking of different types of codes and sharing the knowledge with each other.</p>
+                        <div class="community-tags">
+                            <span class="tag">Hacking</span>
+                            <span class="tag">Ethical hacking</span>
+                            <span class="tag">Collaboration</span>
+                        </div>
+                        <button class="btn-join ripple-effect" onclick="joinCommunity('Hackers', 'fas fa-music', '11,230 members')">
+                            <span><i class="fas fa-users"></i> Join Community</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        <footer>
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h4>SJ Connect</h4>
+                    <p>Bridging generations through shared experiences and wisdom. Join our community today!</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Subscribe to newsletter"
+                            aria-label="Email for newsletter">
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </form>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="./Project.html">Home</a></li>
+                        <li><a href="./About.html">About</a></li>
+                        <li><a href="./Announcements.html">Announcements</a></li>
+                        <li><a href="./Anonymous.html">Anonymous Box</a></li>
+                        <li><a href="./Experience.html">Experience Wall</a></li>
+                        <li><a href="./Community.html">Community</a></li>
+                        <li><a href="./Contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="https://twitter.com" class="social-link" aria-label="Twitter">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="https://facebook.com" class="social-link" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.297c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.015z" />
+                            </svg>
+                        </a>
+                        <a href="https://instagram.com" class="social-link" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.327.069 2.871.069 7.227.069 8.61.014 9.018.072 10.297c.058 5.353 2.582 7.98 7.937 7.98 1.28.058 1.688.013 4.97.013 3.279 0 3.687.045 4.967-.013 5.356-.058 7.98-2.605 7.98-7.958 0-1.28.045-1.688.013-4.967-.058-5.356-2.605-7.98-7.958-7.98-1.28-.058-1.688-.013-4.967-.013zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.881 0 1.44 1.44 0 012.881 0z" />
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0H8.14v16h4.846v-8.231c0-4.637 6.022-5.007 6.022 0V24h4.845v-10.23c0-7.936-10.23-7.642-10.852-3.632V7.5z" />
+                            </svg>
+                        </a>
+                        <a href="https://youtube.com" class="social-link" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.872.505 9.377.505 9.377.505s7.505 0 9.377-.505a3.016 3.016 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12 9.545 15.568z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SJ Connect. All rights reserved.</p>
+            </div>
+        </footer>
+        <script src="community.js"></script>
+        
+        
+</body>

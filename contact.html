@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Layout</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --primary: #f3f03d;
+      --secondary: #4ecdc4;
+      --accent: #45b7d1;
+      --gold: #ffd93d;
+      --dark: #0a0a0a;
+      --darker: #000000;
+      --gray: #1a1a1a;
+      --light-gray: #333333;
+      --white: #ffffff;
+      --text-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #e60b0b, #3342ec);
+      --gradient-secondary: linear-gradient(135deg, #45b7d1, #ffd93d);
+      --gradient-dark: linear-gradient(135deg, #0a0a0a, #1a1a1a, #000000);
+    }
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: var(--darker);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+      padding-top: 80px;
+    }
+    .header { position:fixed;top:0;left:0;right:0;background:rgba(10,10,10,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,107,107,0.2);z-index:1000;transition:all 0.3s ease;animation:slideDown 0.8s ease 2.2s forwards;opacity:0;}
+    .header:hover {background:rgba(10,10,10,1);box-shadow:0 8px 32px rgba(255,107,107,0.2);}
+    .navbar {display:flex;justify-content:space-between;align-items:center;padding:10px 20px;max-width:1400px;margin:0 auto;}
+    .logo {cursor:pointer;transition:transform 0.3s ease;animation:logoFloat 3s ease-in-out infinite 2.5s;}
+    .logo:hover {transform:scale(1.1);}
+    .logo-icon {width:50px;height:50px;background:var(--gradient-primary);border-radius:15px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 0 20px rgba(255,107,107,0.3);}
+    .logo-icon::before {content:'';position:absolute;width:20px;height:20px;background:var(--white);border-radius:50%;top:8px;left:8px;animation:orb1 4s ease-in-out infinite 2.5s;}
+    .logo-icon::after {content:'';position:absolute;width:15px;height:15px;background:var(--gradient-secondary);border-radius:50%;bottom:10px;right:10px;animation:orb2 4s ease-in-out infinite 2.5s;}
+    @keyframes logoFloat {0%,100%{transform:translateY(0px);}50%{transform:translateY(-5px);}}
+    @keyframes orb1 {0%,100%{transform:scale(1) translate(0,0);}50%{transform:scale(1.2) translate(5px,5px);}}
+    @keyframes orb2 {0%,100%{transform:scale(1) translate(0,0);}50%{transform:scale(0.8) translate(-3px,-3px);}}
+    .nav-content {display:flex;align-items:center;gap:20px;}
+    .nav-menu {display:flex;list-style:none;gap:1.5rem;align-items:center;}
+    .nav-link {text-decoration:none;color:var(--text-light);font-weight:500;padding:5px 10px;border-radius:3px;transition:all 0.3s ease;position:relative;}
+    .nav-link:hover {color:var(--white);transform:translateY(-2px) rotate(5deg);border-bottom:1px solid white;}
+    .profile-dropdown {position:relative;}
+    .profile-btn {background:var(--gradient-primary);color:var(--white);border:none;padding:0.7rem 1.5rem;border-radius:25px;cursor:pointer;font-weight:600;transition:all 0.3s ease;display:flex;align-items:center;gap:0.5rem;}
+    .profile-btn:hover {transform:translateY(-2px) scale(1.1);box-shadow:0 8px 25px rgba(255,107,107,0.4);}
+    .dropdown-arrow {transition:transform 0.4s ease;font-size:1.2rem;}
+    .profile-dropdown:hover .dropdown-arrow {transform:rotate(180deg) scale(1.2);}
+    .dropdown-menu {position:absolute;top:120%;right:1%;background:linear-gradient(145deg, rgba(26,26,46,0.95), rgba(22,33,62,0.9));border:2px solid rgba(233,69,96,0.3);border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.4);padding:5px;min-width:200px;opacity:0;visibility:hidden;transform:translateY(-15px) scale(0.9);transition:all 0.4s cubic-bezier(0.4,0,0.2,1);z-index:1002;}
+    .profile-dropdown:hover .dropdown-menu {opacity:1;visibility:visible;transform:translateY(0) scale(1);}
+    .dropdown-item {padding:10px;border-radius:12px;cursor:pointer;transition:all 0.3s ease;display:flex;align-items:center;gap:8px;color:#e2e8f0;font-weight:500;margin-bottom:5px;border:2px solid transparent;}
+    .dropdown-item:hover {background:linear-gradient(135deg,rgba(233,69,96,0.2),rgba(83,52,131,0.1));color:#fff;transform:translateX(8px) scale(1.02);border-color:rgba(233,69,96,0.3);box-shadow:0 4px 15px rgba(233,69,96,0.2);}
+    .hamburger {display:none;cursor:pointer;font-size:35px;position:relative;z-index:1001;transition:all 0.3s ease;}
+    .mobile-menu {position:fixed;top:0;right:-100%;width:80%;max-width:350px;height:100vh;background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);padding:80px 30px 30px;transition:right 0.3s ease-in-out;z-index:1001;overflow-y:auto;}
+    .mobile-menu.active {right:0;}
+    .mobile-menu .nav-menu {flex-direction:column;gap:1.5rem;align-items:flex-start;}
+    .mobile-menu .nav-link {font-size:1.2rem;padding:10px 15px;display:block;width:100%;}
+    .mobile-menu .profile-btn {width:100%;justify-content:center;margin-top:1rem;}
+    .close-menu {font-size:40px;color:var(--white);cursor:pointer;position:absolute;top:20px;right:20px;transition:all 0.3s;}
+    .close-menu:hover {color:var(--gradient-primary);transform:rotate(90deg);}
+    .overlay {position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:999;opacity:0;visibility:hidden;transition:all 0.3s;}
+    .overlay.active {opacity:1;visibility:visible;}
+    @keyframes slideDown {from {opacity: 0; transform: translateY(-50px);} to {opacity: 1; transform: translateY(0);}}
+    .main {display:flex;flex-direction:row;min-height:calc(100vh - 80px);background:var(--darker);}
+    .main1 {background:rgb(247,236,236);width:40%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:2rem;color:#000;}
+    .main2 {width:60%;position:relative;overflow:hidden;}
+    .main2 img {width:100%;height:100%;object-fit:cover;display:block;position:absolute;top:0;left:0;}
+    .content {position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;padding:2rem;z-index:1;background:rgba(0,0,0,0.5);}
+    .content1 {width:100%;max-width:600px;color:white;}
+    h2 {text-shadow:0 0 2px whitesmoke;margin-bottom:1rem;font-size:2rem;}
+    input[type="checkbox"] {width:20px;height:20px;background:black;}
+    .name {display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
+    .name input, .mail input, textarea {
+      opacity:0.8;box-shadow:0 0 2px whitesmoke;width:100%;padding:1rem;border-radius:2px;background:black;color:white;font-size:1rem;border:none;
+    }
+    .mail {margin-bottom:1rem;}
+    textarea {height:10rem;margin-bottom:1rem;}
+    button {
+      border-radius:10px;padding:0.75rem 1.5rem;background-color:rgb(253,68,1);color:white;border:none;cursor:pointer;transition:background-color 0.3s;
+      width: 100%; /* Ensures button spans full width matching inputs */
+      box-sizing: border-box;
+    }
+    button:hover {background-color:rgb(255,237,237);color:black;}
+    .check {
+      display:flex;align-items:center;gap:1rem;margin-bottom:1rem;
+      flex-wrap: wrap;
+    }
+    .section {display:flex;padding:3rem;color:#000;}
+    .heading {padding-left:15px;}
+    .smbox {position:relative;font-size:26px;margin-bottom:1rem;}
+    .rectangle {opacity:0.1;position:absolute;z-index:0;width:60px;height:40px;background:rgb(186,2,2);}
+    input::placeholder, textarea::placeholder {color:#ccc;opacity:0.8;}
+    .box {opacity:0.9;color:black;position:relative;z-index:1;width:100%;max-width:600px;background:rgb(202,200,200);border-bottom:8px solid #e60b0b;padding:2rem;display:flex; flex-direction: column; }
+    h1 {font-size:3rem;margin-bottom:1rem;text-align:left;margin-left:0;}
+    .p1 {font-size:1.25rem;margin-bottom:1rem;text-align:justify;}
+    .p2 {font-size:1rem;}
+    footer {background:var(--gradient-dark);padding:3rem 2rem;color:var(--text-light);font-size:0.9rem;border-top:1px solid rgba(255,107,107,0.2);margin-top:3rem;}
+    .footer-container {max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:2rem;}
+    .footer-section {flex:1;min-width:200px;}
+    .footer-section h4 {font-size:1.2rem;margin-bottom:1rem;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .footer-links {list-style:none;padding-left:10px;}
+    .footer-links li {margin-bottom:0.5rem;}
+    .footer-links a {color:var(--text-light);text-decoration:none;transition:color 0.3s,transform 0.3s;}
+    .footer-links a:hover {color:var(--white);transform:translateX(5px);}
+    .social-links {display:flex;gap:1rem;}
+    .social-link {display:inline-block;width:32px;height:32px;transition:transform 0.3s;}
+    .social-link:hover {transform:scale(1.1);}
+    .social-link svg {fill:var(--text-light);width:100%;height:100%;transition:fill 0.3s;}
+    .social-link:hover svg {fill:var(--white);}
+    .newsletter-form {display:flex;margin-top:1rem;}
+    .newsletter-input {background:var(--light-gray);border:none;padding:0.5rem;border-radius:4px 0 0 4px;color:var(--white);flex:1;}
+    .newsletter-btn {background:var(--gradient-primary);border:none;padding:0.5rem 1rem;border-radius:0 4px 4px 0;color:var(--white);cursor:pointer;transition:transform 0.3s;}
+    .newsletter-btn:hover {transform:scale(1.05);}
+    .copyright {text-align:center;margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(255,107,107,0.1);}
+    
+    /* RESPONSIVE STYLES */
+    @media (max-width:992px) {
+      .navbar .nav-menu {display:none;}
+      .mobile-menu .nav-menu {display:flex;}
+      .hamburger {display:block;width:25px;height:25px;}
+      .nav-content {gap:10px;}
+      .profile-dropdown {display:block;}
+      .profile-btn {padding:0.5rem 1rem;font-size:1rem;}
+    }
+    @media (max-width:768px) {
+      .navbar {padding:10px 15px;}
+      .mobile-menu {width:85%;}
+      .profile-btn {padding:0.4rem 0.8rem;font-size:0.9rem;}
+      .main {flex-direction:column;}
+      .main1,.main2 {width:100%;min-height:auto;}
+      .main1 {padding:2rem 1rem;align-items:flex-start;}
+      .main1 .box { text-align: left; width: 100%; max-width: 600px; }
+      .main1 h1 {text-align:left;margin-left:0;}
+      .main2 {height:auto;padding-top:56.25%;position:relative;}
+      .main2 img {height:auto;}
+      .content {padding:1rem;position:relative;background:none;}
+      .content1 {color:var(--text-light);width:100%;max-width:600px;}
+      .name {flex-direction:column;gap:0.5rem;}
+      h2 {font-size:1.5rem;}
+      input, textarea {font-size:0.9rem;}
+      .box {margin:0;}
+      h1 {font-size:2rem;}
+      .p1 {font-size:1rem;}
+      .p2 {font-size:0.875rem;}
+      .check {font-size:0.875rem;}
+      button {width:100%;margin-top:1rem;}
+      .footer-container {flex-direction:column;gap:1.5rem;}
+      .footer-section {text-align:center;}
+      .social-links {justify-content:center;}
+      
+      /* Stack checkbox and button vertically */
+      .check {
+        flex-direction: column !important; 
+        align-items: flex-start !important; 
+        gap: 0.5rem !important;
+        width: 100%;
+      }
+      .check input[type="checkbox"],
+      .check label {
+        display: inline-block;
+        vertical-align: middle;
+        width: auto;
+      }
+      .check button {
+        width: 100% !important;
+        margin-top: 0.7rem !important;
+        align-self: stretch !important;
+      }
+      /* Ensure equal width for input, textarea, and button */
+      .content1,
+      .name input,
+      .mail input,
+      textarea,
+      .check button {
+        width: 100% !important;
+        box-sizing: border-box;
+      }
+    }
+    @media (max-width:500px) {
+      .logo-icon {width:40px;height:40px;}
+      .mobile-menu {width:90%;}
+      h2 {font-size:1.25rem;}
+      input,textarea {font-size:0.875rem;padding:0.75rem;}
+      button {padding:0.5rem 1rem;}
+      .content{padding:0.5rem !important;}
+      .main1{padding:1rem 0.5rem;}
+      .box{padding:1rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <nav class="navbar">
+      <div class="logo"><div class="logo-icon"></div></div>
+      <div class="nav-content">
+        <div class="hamburger">&#9776;</div>
+        <ul class="nav-menu">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#anonymous" class="nav-link">Anonymous Box</a></li>
+          <li><a href="#experience" class="nav-link">Experience Wall</a></li>
+          <li><a href="#community" class="nav-link">Community</a></li>
+          <li><a href="#profiles" class="nav-link">Profiles</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="profile-dropdown">
+          <button class="profile-btn">My Profile<span class="dropdown-arrow">▼</span></button>
+          <div class="dropdown-menu">
+            <div class="dropdown-item">👤 Personal Details</div>
+            <div class="dropdown-item">⚙ Settings</div>
+            <div class="dropdown-item">🎯 Preferences</div>
+            <div class="dropdown-item">📊 Activity</div>
+            <div class="dropdown-item">🚪 Logout</div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <span class="close-menu" onclick="closeMobileMenu()">&times;</span>
+    <ul class="nav-menu">
+      <li><a href="#home" class="nav-link">Home</a></li>
+      <li><a href="#anonymous" class="nav-link">Anonymous Box</a></li>
+      <li><a href="#experience" class="nav-link">Experience Wall</a></li>
+      <li><a href="#community" class="nav-link">Community</a></li>
+      <li><a href="#profiles" class="nav-link">Profiles</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+  </div>
+  <div class="overlay"></div>
+  <div class="main">
+    <div class="main1">
+      <div class="box">
+        <h1>Contact us</h1>
+        <p class="p1">I will read all my emails one by one and I'm not going to let them missed. Send me any message you want and I will reply that.</p>
+        <p class="p2">I need your <strong>Name</strong> and <strong>Email Address</strong> but you won't receive anything but your reply only.</p>
+        <div class="smbox" style="width:40px; background-color:white; text-align:center;">&#128222;</div>
+        <div class="rectangle"></div>
+        <span style="color:rgb(218,12,12);font-size:40px;">&#9670;</span>
+      </div>
+    </div>
+    <div class="main2">
+      <img src="https://img.freepik.com/premium-photo/top-black-workspace-background-with-copy-space-surrounded-by-modern-black-office-accessories_67155-21755.jpg" alt="Workspace background" />
+      <form class="content">
+        <div class="content1">
+          <h2>Send Me A Message</h2>
+          <div class="name">
+            <input type="text" placeholder="First Name" required>
+            <input type="text" placeholder="Last Name" required>
+          </div>
+          <div class="mail">
+            <input type="email" placeholder="Email Address" required>
+          </div>
+          <textarea placeholder="Message" required></textarea>
+          <div class="check">
+            <input type="checkbox" id="newsletter">
+            <label for="newsletter">Send me your Newsletter</label>
+            <button type="submit">Send Message</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>ConnectGen</h4>
+        <p>Bridging generations through shared experiences and wisdom. Join our community today!</p>
+        <form class="newsletter-form" onsubmit="return false;">
+          <input type="email" class="newsletter-input" placeholder="Subscribe to newsletter" aria-label="Email for newsletter">
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#community">Community</a></li>
+          <li><a href="#profiles">Profiles</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#privacy">Privacy Policy</a></li>
+          <li><a href="#terms">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Follow Us</h4>
+        <div class="social-links">
+          <a href="https://twitter.com" class="social-link" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://facebook.com" class="social-link" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.297c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.015z"/></svg>
+          </a>
+          <a href="https://instagram.com" class="social-link" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.327.069 2.871.069 7.227.069 8.61.014 9.018.072 10.297c.058 5.353 2.582 7.98 7.937 7.98 1.28.058 1.688.013 4.97.013 3.279 0 3.687.045 4.967-.013 5.356-.058 7.98-2.605 7.98-7.958 0-1.28.045-1.688.013-4.967-.058-5.356-2.605-7.98-7.958-7.98-1.28-.058-1.688-.013-4.967-.013zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.881 0 1.44 1.44 0 012.881 0z"/></svg>
+          </a>
+          <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0H8.14v16h4.846v-8.231c0-4.637 6.022-5.007 6.022 0V24h4.845v-10.23c0-7.936-10.23-7.642-10.852-3.632V7.5z"/></svg>
+          </a>
+          <a href="https://youtube.com" class="social-link" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.872.505 9.377.505 9.377.505s7.505 0 9.377-.505a3.016 3.016 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12 9.545 15.568z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 ConnectGen. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const overlay = document.querySelector('.overlay');
+    hamburger.addEventListener('click', function() {
+      this.classList.toggle('open');
+      mobileMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      if (mobileMenu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+    overlay.addEventListener('click', function() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('active');
+      this.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+    const navLinks = document.querySelectorAll('.mobile-menu .nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+    function closeMobileMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

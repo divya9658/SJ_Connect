@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - SJConnect</title>
+    <link rel="stylesheet" href="signup.css" />
+
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Get Started Free</h1>
+        <p class="subtitle">Writing is clarifying!!</p>
+        <form id="signupForm">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="Enter your full name" required />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address" />
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password (min 8 characters)" required
+                autocomplete="off" minlength="8" />
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm your password" required autocomplete="off"
+                minlength="8" />
+
+            <label for="yearOfPassout">Year of Graduation/Passout</label>
+            <select id="yearOfPassout" required aria-label="Select Year of Graduation/Passout" aria-required="true">
+                <option value="">Select Year</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
+                <option value="2031">2031</option> <!-- Added for future-proofing -->
+            </select>
+
+            <button type="submit">Sign Up</button>
+            <p class="error-message" id="errorMessage"></p>
+        </form>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+    <script src="signup.js"></script>
+
+</body>
+
+</html>

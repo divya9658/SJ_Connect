@@ -1,0 +1,93 @@
+  body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #000000;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        scroll-behavior: smooth;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(20px);
+        padding: 40px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 400px;
+        color: white;
+        text-align: center;
+        position: relative;
+        animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .container h1 {
+        margin-bottom: 20px;
+        font-size: 2rem;
+    }
+
+    .container input {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 10px;
+        background: rgb(183, 183, 183);
+        color: black;
+        font-size: 18px;
+        outline: none;
+    }
+
+    .container button {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin: 10px;
+        cursor: pointer;
+        background-color: #2980b9;
+        color: white;
+    }
+
+    #submitBtn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .error {
+        color: red;
+        margin-top: 10px;
+    }
+
+    .success {
+        color: green;
+        margin-top: 10px;
+    }
+
+    .container a {
+        color: #ff8e8e;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
